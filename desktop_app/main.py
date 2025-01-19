@@ -44,9 +44,11 @@ class MainWindow(QMainWindow):
 
 
     def item_selected(self, item: QTreeWidgetItem, column: int):
+        self.ui.listWidget.clear()
         users = get_employees_by_department(item.text(column))
 
-        self.ui.listWidget.addItems(users)
+        for user in users:
+            self.ui.listWidget.addItem(user['username'])
 
 
     def setup_tree_widget(self):

@@ -41,10 +41,6 @@ def get_subdivision_by_id(id: int):
             return subdivision
         
     return None
-    
-
-async def async_get_subdivision_by_id(id: int):
-    return get_subdivision_by_id(id)
 
 
 def get_sub_sub_division_by_id(id: int):
@@ -59,32 +55,93 @@ def get_sub_sub_division_by_id(id: int):
     return False
 
 
-async def async_get_sub_sub_division_by_id(id: int):
-    return get_sub_sub_division_by_id(id)
-
-
-def get_organization_by_id(id: int):
-    url = f"http://127.0.0.1:8000/api/V1/organizations/{id}"
+def get_sub_division_by_name(name: str):
+    url = f"http://127.0.0.1:8000/api/V1/subdivisions/search_name/{name}"
     response = requests.get(url)
 
-    print(response.json())
-
+    if response.status_code == 200:
+        return response.json()['id']
     return None
 
-async def async_get_organization_by_id(id: int):
-    return get_organization_by_id(id=id)
+
+def get_organization_by_name(name: str):
+    url = f"http://127.0.0.1:8000/api/V1/organizations/search_name/{name}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.json()['id']
+    return None
 
 
-def find_organization(organization_name: str):
-    organizations = get_organizations()
-    for organization in organizations:
-        if organization["title"] == organization_name:
-            return organization
+def get_sub_sub_division_by_name(name: str):
+    url = f"http://127.0.0.1:8000/api/V1/subsubdivisions/search_name/{name}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.json()['id']
     return None
     
 
-    
 def get_employees_by_department(department: str) -> list[dict]:
-    url = f"http://127.0.0.1:8000/api/V1/employees/search/{department}"
+    url = f"http://127.0.0.1:8000/api/V1/employees/search_department/{department}"
     response = requests.get(url=url)
     return response.json()
+
+
+def get_employees():
+    url = "http://127.0.0.1:8000/api/V1/employees"
+    response = requests.get(url)
+
+    users = []
+    for user in response.json():
+        users.append(user["username"])
+
+    return users
+
+
+def get_employee_by_name(name: str):
+    url = f"http://127.0.0.1:8000/api/V1/employees/search_name/{name}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.json()["id"]
+    else:
+        return None
+
+
+def get_cabinets():
+    url = "http://127.0.0.1:8000/api/V1/cabinets"
+    response = requests.get(url)
+
+    cabinets = []
+    for cabinet in response.json():
+        cabinets.append(cabinet["title"])
+
+    return cabinets
+
+
+def get_cabinet_by_name(name: str):
+    url = f"http://127.0.0.1:8000/api/V1/cabinets/{name}"
+    response = requests.get(url)
+
+    return response.json()['id']
+
+
+def get_job_titles():
+    url = "http://127.0.0.1:8000/api/V1/jobtitles"
+    response = requests.get(url)
+
+    job_titles = []
+    for job_title in response.json():
+        job_titles.append(job_title["title"])
+
+    return job_titles
+
+
+def get_job_title_by_name(name: str):
+    url = f"http://127.0.0.1:8000/api/V1/jobtitles/search_name/{name}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.json()["id"]
+    return None

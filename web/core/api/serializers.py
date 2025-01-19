@@ -1,5 +1,18 @@
 from rest_framework.serializers import ModelSerializer
-from models.models import Organization, Subdivision, SubSubDivision, Employee
+from models.models import *
+
+
+
+class CabinetSerializers(ModelSerializer):
+    class Meta:
+        model = Cabinet
+        fields = "__all__"
+
+
+class JobTitleSerializers(ModelSerializer):
+    class Meta:
+        model = Position
+        fields = "__all__"
 
 
 class OrgarizationsSerializer(ModelSerializer):

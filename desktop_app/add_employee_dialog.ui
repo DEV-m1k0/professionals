@@ -2,13 +2,34 @@
 <ui version="4.0">
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>459</height>
+    <width>500</width>
+    <height>435</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>435</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>435</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -16,7 +37,25 @@
   <property name="styleSheet">
    <string notr="true">background-color: white;</string>
   </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_20">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_19">
      <item>
@@ -27,7 +66,7 @@
 }</string>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="documentMode">
         <bool>true</bool>
@@ -62,7 +101,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="dateEdit">
+               <widget class="QDateEdit" name="input_date_of_birth">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -96,7 +135,7 @@ color: black;</string>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit">
+               <widget class="QLineEdit" name="input_full_name">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -137,7 +176,7 @@ color: black;</string>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_4">
+               <widget class="QLineEdit" name="input_home_number">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -178,7 +217,7 @@ color: black;</string>
                </widget>
               </item>
               <item>
-               <widget class="QPlainTextEdit" name="plainTextEdit">
+               <widget class="QPlainTextEdit" name="input_more_info">
                 <property name="styleSheet">
                  <string notr="true">	background-color: white;
 	color: black;</string>
@@ -236,7 +275,7 @@ color: black;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_3">
+                    <widget class="QLineEdit" name="input_work_phone">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                        <horstretch>0</horstretch>
@@ -277,7 +316,7 @@ color: black;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_2">
+                    <widget class="QLineEdit" name="input_work_email">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                        <horstretch>0</horstretch>
@@ -335,7 +374,7 @@ color: black;</string>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QComboBox" name="comboBox_7">
+                      <widget class="QComboBox" name="optional_job_titles">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                          <horstretch>0</horstretch>
@@ -369,7 +408,7 @@ color: black;</string>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QComboBox" name="comboBox_6">
+                      <widget class="QComboBox" name="optional_cabinets">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                          <horstretch>0</horstretch>
@@ -407,7 +446,7 @@ color: black;</string>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QComboBox" name="comboBox_4">
+                      <widget class="QComboBox" name="optional_boss">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                          <horstretch>0</horstretch>
@@ -441,7 +480,7 @@ color: black;</string>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QComboBox" name="comboBox_5">
+                      <widget class="QComboBox" name="optional_helpers">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                          <horstretch>0</horstretch>
@@ -512,7 +551,7 @@ color: black;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="comboBox_2">
+                  <widget class="QComboBox" name="optional_sub_divisions">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                      <horstretch>0</horstretch>
@@ -558,7 +597,7 @@ color: black;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="comboBox">
+                  <widget class="QComboBox" name="optional_organizations">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                      <horstretch>0</horstretch>
@@ -607,7 +646,7 @@ color: black;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="comboBox_3">
+                  <widget class="QComboBox" name="optional_department">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                      <horstretch>0</horstretch>
@@ -645,7 +684,7 @@ color: black;</string>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="btn_save">
        <property name="minimumSize">
         <size>
          <width>0</width>

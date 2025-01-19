@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
 )
 from .views import (
     OrganizationListApiView, SubDivisionListApiView, SubSubDivisionListApiView,
-    EmployeeListApiView
+    EmployeeListApiView, EmployeeSearchApiView
     )
 
 urlpatterns = [
@@ -21,4 +21,5 @@ urlpatterns = [
     path("subdivisions", SubDivisionListApiView.as_view()),
     path("subsubdivions", SubSubDivisionListApiView.as_view()),
     path("employees", EmployeeListApiView.as_view()),
+    path("employees/search/<str:department>", EmployeeSearchApiView.as_view()),
 ]

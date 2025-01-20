@@ -15,8 +15,7 @@ from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QListWidget,
     QMessageBox, QTreeWidgetItem, QFrame, QDialog)
 from main_window import Ui_MainWindow
 from api import *
-from add_employee_dialog import AddEmployeeDialog
-# from edit_employee import EditEmployeeDialog
+from dialogs import EditEmployeeDialog, AddEmployeeDialog
 
 
 class MainWindow(QMainWindow):
@@ -38,13 +37,15 @@ class MainWindow(QMainWindow):
         self.ui.employee_add_button.clicked.connect(self.add_employee)
         self.ui.listWidget.itemClicked.connect(self.employee_selected)
 
+        self.selected_department = ""
+
 
     def employee_selected(self, item: QListWidgetItem):
-        # dialog = EditEmployeeDialog(name=item.text(), cabinets=self.cabinets, job_titles=self.job_titles,
-        #                             organizations=self.organizations, sub_divisions=self.sub_divisions,
-        #                             sub_sub_divisions=self.sub_sub_divisions, employees=self.employees)
-        # dialog.exec()
-        pass
+        dialog = EditEmployeeDialog(name=item.text(), cabinets=self.cabinets, job_titles=self.job_titles,
+                                    organizations=self.organizations, sub_divisions=self.sub_divisions,
+                                    sub_sub_divisions=self.sub_sub_divisions, employees=self.employees,
+                                    selected_department=self.selected_department)
+        dialog.exec()
 
 
     def add_employee(self):
@@ -54,9 +55,14 @@ class MainWindow(QMainWindow):
         dialog.exec()
 
 
-    def item_selected(self, item: QTreeWidgetItem, column: int):
+    def item_selected(self, item: QTreeWidgetItem, column: int = 0):
+        try:
+            text = item.text(column)
+        except:
+            text = item
+        self.selected_department = text
         self.ui.listWidget.clear()
-        users = get_employees_by_department(item.text(column))
+        users = get_employees_by_department(text)
 
         for user in users:
             self.ui.listWidget.addItem(user['username'])

@@ -25,6 +25,7 @@ urlpatterns = [
     path("jobtitles", JobTitleListAPIView.as_view()),
     path("jobtitles/search_name/<str:name>", JobTitleByNameAPIView.as_view()),
     path("employees", EmployeeListApiView.as_view()),
+    path("employee/<int:pk>", EmployeeUpdateApiView.as_view()),
     path("employees/search_department/<str:department>", EmployeeSearchByDepartmentApiView.as_view()),
     path("employees/search_name/<str:name>", EmployeeSearchByNameApiView.as_view()),
 ]

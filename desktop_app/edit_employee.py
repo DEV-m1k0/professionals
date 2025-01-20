@@ -17,8 +17,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QDateEdit, QDialog,
     QFrame, QHBoxLayout, QLabel, QLineEdit,
-    QPushButton, QScrollArea, QSizePolicy, QVBoxLayout,
-    QWidget)
+    QPlainTextEdit, QPushButton, QScrollArea, QSizePolicy,
+    QVBoxLayout, QWidget)
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -47,7 +47,7 @@ class Ui_Dialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 310, 818))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, -402, 313, 928))
         self.verticalLayout_9 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.verticalLayout_2 = QVBoxLayout()
@@ -338,6 +338,24 @@ class Ui_Dialog(object):
 
         self.verticalLayout_9.addLayout(self.verticalLayout_10)
 
+        self.verticalLayout_12 = QVBoxLayout()
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.label_12 = QLabel(self.scrollAreaWidgetContents)
+        self.label_12.setObjectName(u"label_12")
+        self.label_12.setStyleSheet(u"color: black;")
+
+        self.verticalLayout_12.addWidget(self.label_12)
+
+        self.input_more_info = QPlainTextEdit(self.scrollAreaWidgetContents)
+        self.input_more_info.setObjectName(u"input_more_info")
+        self.input_more_info.setStyleSheet(u"	background-color: white;\n"
+"	color: black;")
+
+        self.verticalLayout_12.addWidget(self.input_more_info)
+
+
+        self.verticalLayout_9.addLayout(self.verticalLayout_12)
+
         self.btn_save = QPushButton(self.scrollAreaWidgetContents)
         self.btn_save.setObjectName(u"btn_save")
         self.btn_save.setMinimumSize(QSize(0, 35))
@@ -401,6 +419,7 @@ class Ui_Dialog(object):
         self.label_15.setText(QCoreApplication.translate("Dialog", u"\u041e\u0440\u0433\u0430\u043d\u0438\u0437\u0430\u0446\u0438\u044f:", None))
         self.label_16.setText(QCoreApplication.translate("Dialog", u"\u041f\u043e\u0434\u0440\u0430\u0437\u0434\u0435\u043b\u0435\u043d\u0438\u0435:", None))
         self.label_10.setText(QCoreApplication.translate("Dialog", u"\u041e\u0442\u0434\u0435\u043b:", None))
+        self.label_12.setText(QCoreApplication.translate("Dialog", u"\u0414\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u0430\u044f \u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f:", None))
         self.btn_save.setText(QCoreApplication.translate("Dialog", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
         self.pushButton.setText(QCoreApplication.translate("Dialog", u"\u0423\u0432\u043e\u043b\u0438\u0442\u044c", None))
     # retranslateUi

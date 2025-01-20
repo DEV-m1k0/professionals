@@ -102,6 +102,10 @@ class EmployeeListApiView(ListAPIView, CreateAPIView):
     serializer_class = EmployeesSerializer
     queryset = Employee.objects.all()
 
+class EmployeeUpdateApiView(UpdateAPIView):
+    serializer_class = EmployeesSerializer
+    queryset = Employee.objects.all()
+
 
 class EmployeeSearchByNameApiView(ListAPIView):
     serializer_class = EmployeesSerializer

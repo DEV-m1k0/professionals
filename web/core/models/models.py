@@ -100,9 +100,11 @@ class Event(models.Model):
     responsible_workers = models.ManyToManyField("Employee", related_name="responsible_workers")
     event_type_id = models.ForeignKey("EventType", on_delete=models.CASCADE, related_name="event_type")
     education_id = models.ForeignKey("Education", on_delete=models.CASCADE, related_name="education")
+    people = models.ManyToManyField("Employee", blank=True)
 
 
 class Employee(AbstractUser):
+    username = models.CharField(max_length=255, unique=True)
     position_id = models.ForeignKey("Position", on_delete=models.SET_NULL, null=True, related_name="position")
     work_phone = models.CharField(max_length=20, null=True)
     cabinet_id = models.ForeignKey("Cabinet", on_delete=models.SET_NULL, null=True, related_name="cabinet")

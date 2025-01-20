@@ -23,7 +23,7 @@ def get_subdivisions():
 
 def get_sub_sub_divisions():
     try:
-        url = "http://127.0.0.1:8000/api/V1/subsubdivions"
+        url = "http://127.0.0.1:8000/api/V1/subsubdivisions"
         response = requests.get(url)
 
         return response.json()

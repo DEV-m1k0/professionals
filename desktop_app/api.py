@@ -99,12 +99,23 @@ def get_employees():
     return users
 
 
-def get_employee_by_name(name: str):
+def get_employee_id_by_name(name: str):
+    global employee
     url = f"http://127.0.0.1:8000/api/V1/employees/search_name/{name}"
     response = requests.get(url)
 
     if response.status_code == 200:
         return response.json()["id"]
+    else:
+        return None
+
+def get_employee_by_name(name: str):
+    global employee
+    url = f"http://127.0.0.1:8000/api/V1/employees/search_name/{name}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.json()
     else:
         return None
 

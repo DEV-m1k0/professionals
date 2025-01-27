@@ -41,19 +41,27 @@ class Cabinet(models.Model):
 
 
 class CalendarSkip(models.Model):
-    employees = models.ManyToManyField("Employee", related_name="calendar_skip_employees")
+    employee = models.ForeignKey("Employee", null=True, on_delete=models.SET_NULL)
     date_since = models.DateField()
-    date_until = models.DateField(null=True)
+    date_until = models.DateField(null=True, blank=True)
 
 
 class CalendarVacation(models.Model):
-    employees = models.ManyToManyField("Employee", related_name="calendar_vacation_employees")
+    employee = models.ForeignKey("Employee", null=True, on_delete=models.SET_NULL)
     date_since = models.DateField()
-    date_until = models.DateField(null=True)
+    date_until = models.DateField(null=True, blank=True)
+    
 
-
-class CalendarEducation(models.Model):
-    event_id = models.ForeignKey("Event", on_delete=models.CASCADE, related_name="event")
+class Event(models.Model):
+    title = models.CharField(max_length=255)
+    date_since = models.DateTimeField()
+    date_until = models.DateTimeField()
+    description = models.TextField(max_length=255)
+    status = models.BooleanField()
+    responsible_workers = models.ManyToManyField("Employee", related_name="responsible_workers")
+    event_type_id = models.ForeignKey("EventType", on_delete=models.CASCADE, related_name="event_type")
+    education_id = models.ForeignKey("Education", on_delete=models.CASCADE, related_name="education")
+    people = models.ManyToManyField("Employee", blank=True)
 
 class EducationType(models.Model):
     title = models.CharField(max_length=255)
@@ -91,18 +99,6 @@ class EventType(models.Model):
     title = models.CharField(max_length=255)
 
 
-class Event(models.Model):
-    title = models.CharField(max_length=255)
-    date_since = models.DateTimeField()
-    date_until = models.DateTimeField()
-    description = models.TextField(max_length=255)
-    status = models.BooleanField()
-    responsible_workers = models.ManyToManyField("Employee", related_name="responsible_workers")
-    event_type_id = models.ForeignKey("EventType", on_delete=models.CASCADE, related_name="event_type")
-    education_id = models.ForeignKey("Education", on_delete=models.CASCADE, related_name="education")
-    people = models.ManyToManyField("Employee", blank=True)
-
-
 class Employee(AbstractUser):
     username = models.CharField(max_length=255, unique=True)
     position_id = models.ForeignKey("Position", on_delete=models.SET_NULL, null=True, related_name="position")
@@ -116,6 +112,7 @@ class Employee(AbstractUser):
     more_info = models.TextField(max_length=255, null=True)
     birthday = models.DateField(null=True)
     personal_phone = models.CharField(max_length=20, null=True)
+    date_of_dismissal = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return str(self.username)

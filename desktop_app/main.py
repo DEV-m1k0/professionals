@@ -57,11 +57,12 @@ class MainWindow(QMainWindow):
 
     def item_selected(self, item: QTreeWidgetItem, column: int = 0):
         try:
-            text = item.text(column)
+            text = item.text(column).strip()
         except:
-            text = item
+            text = item.strip()
         self.selected_department = text
         self.ui.listWidget.clear()
+        print(text)
         users = get_employees_by_department(text)
 
         for user in users:

@@ -16,22 +16,23 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QDateEdit, QDialog,
-    QFrame, QHBoxLayout, QLabel, QLineEdit,
-    QPlainTextEdit, QPushButton, QScrollArea, QSizePolicy,
-    QVBoxLayout, QWidget)
+    QFrame, QHBoxLayout, QHeaderView, QLabel,
+    QLineEdit, QPlainTextEdit, QPushButton, QScrollArea,
+    QSizePolicy, QTableWidget, QTableWidgetItem, QVBoxLayout,
+    QWidget)
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(700, 600)
+        Dialog.resize(800, 600)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
         Dialog.setSizePolicy(sizePolicy)
-        Dialog.setMinimumSize(QSize(700, 600))
-        Dialog.setMaximumSize(QSize(700, 600))
+        Dialog.setMinimumSize(QSize(800, 600))
+        Dialog.setMaximumSize(QSize(800, 600))
         Dialog.setStyleSheet(u"background-color: rgb(217, 217, 217);")
         self.verticalLayout_4 = QVBoxLayout(Dialog)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -47,7 +48,7 @@ class Ui_Dialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, -402, 313, 928))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 363, 928))
         self.verticalLayout_9 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.verticalLayout_2 = QVBoxLayout()
@@ -377,6 +378,166 @@ class Ui_Dialog(object):
         self.frame_2.setStyleSheet(u"background-color: white;")
         self.frame_2.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Shadow.Raised)
+        self.horizontalLayout_3 = QHBoxLayout(self.frame_2)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.scrollArea_2 = QScrollArea(self.frame_2)
+        self.scrollArea_2.setObjectName(u"scrollArea_2")
+        self.scrollArea_2.setWidgetResizable(True)
+        self.scrollAreaWidgetContents_3 = QWidget()
+        self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 353, 500))
+        self.verticalLayout_20 = QVBoxLayout(self.scrollAreaWidgetContents_3)
+        self.verticalLayout_20.setObjectName(u"verticalLayout_20")
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.combobox_filtration_by_table = QComboBox(self.scrollAreaWidgetContents_3)
+        self.combobox_filtration_by_table.addItem("")
+        self.combobox_filtration_by_table.addItem("")
+        self.combobox_filtration_by_table.addItem("")
+        self.combobox_filtration_by_table.addItem("")
+        self.combobox_filtration_by_table.setObjectName(u"combobox_filtration_by_table")
+        self.combobox_filtration_by_table.setStyleSheet(u"color: black;")
+
+        self.horizontalLayout_2.addWidget(self.combobox_filtration_by_table)
+
+
+        self.verticalLayout_20.addLayout(self.horizontalLayout_2)
+
+        self.frame_study_date = QFrame(self.scrollAreaWidgetContents_3)
+        self.frame_study_date.setObjectName(u"frame_study_date")
+        self.frame_study_date.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_study_date.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout_5 = QVBoxLayout(self.frame_study_date)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.label = QLabel(self.frame_study_date)
+        self.label.setObjectName(u"label")
+        self.label.setStyleSheet(u"color: black;")
+
+        self.horizontalLayout_4.addWidget(self.label)
+
+        self.combobox_filtration_by_period_for_study = QComboBox(self.frame_study_date)
+        self.combobox_filtration_by_period_for_study.addItem("")
+        self.combobox_filtration_by_period_for_study.addItem("")
+        self.combobox_filtration_by_period_for_study.addItem("")
+        self.combobox_filtration_by_period_for_study.addItem("")
+        self.combobox_filtration_by_period_for_study.setObjectName(u"combobox_filtration_by_period_for_study")
+        self.combobox_filtration_by_period_for_study.setStyleSheet(u"color: black;")
+
+        self.horizontalLayout_4.addWidget(self.combobox_filtration_by_period_for_study)
+
+
+        self.verticalLayout_5.addLayout(self.horizontalLayout_4)
+
+        self.tableWidget = QTableWidget(self.frame_study_date)
+        if (self.tableWidget.columnCount() < 2):
+            self.tableWidget.setColumnCount(2)
+        __qtablewidgetitem = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        self.tableWidget.setObjectName(u"tableWidget")
+        self.tableWidget.setStyleSheet(u"color: black;")
+        self.tableWidget.setSortingEnabled(True)
+
+        self.verticalLayout_5.addWidget(self.tableWidget)
+
+
+        self.verticalLayout_20.addWidget(self.frame_study_date)
+
+        self.frame_skips_date = QFrame(self.scrollAreaWidgetContents_3)
+        self.frame_skips_date.setObjectName(u"frame_skips_date")
+        self.frame_skips_date.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_skips_date.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout_18 = QVBoxLayout(self.frame_skips_date)
+        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
+        self.verticalLayout_18.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.label_4 = QLabel(self.frame_skips_date)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setStyleSheet(u"color: black;")
+
+        self.horizontalLayout_5.addWidget(self.label_4)
+
+        self.combobox_filtration_by_period_for_skips = QComboBox(self.frame_skips_date)
+        self.combobox_filtration_by_period_for_skips.addItem("")
+        self.combobox_filtration_by_period_for_skips.addItem("")
+        self.combobox_filtration_by_period_for_skips.addItem("")
+        self.combobox_filtration_by_period_for_skips.setObjectName(u"combobox_filtration_by_period_for_skips")
+        self.combobox_filtration_by_period_for_skips.setStyleSheet(u"color: black;")
+
+        self.horizontalLayout_5.addWidget(self.combobox_filtration_by_period_for_skips)
+
+
+        self.verticalLayout_18.addLayout(self.horizontalLayout_5)
+
+        self.tableWidget_2 = QTableWidget(self.frame_skips_date)
+        if (self.tableWidget_2.columnCount() < 2):
+            self.tableWidget_2.setColumnCount(2)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        self.tableWidget_2.setHorizontalHeaderItem(0, __qtablewidgetitem2)
+        __qtablewidgetitem3 = QTableWidgetItem()
+        self.tableWidget_2.setHorizontalHeaderItem(1, __qtablewidgetitem3)
+        self.tableWidget_2.setObjectName(u"tableWidget_2")
+        self.tableWidget_2.setStyleSheet(u"color: black;")
+        self.tableWidget_2.setSortingEnabled(True)
+
+        self.verticalLayout_18.addWidget(self.tableWidget_2)
+
+
+        self.verticalLayout_20.addWidget(self.frame_skips_date)
+
+        self.frame_vacation_date = QFrame(self.scrollAreaWidgetContents_3)
+        self.frame_vacation_date.setObjectName(u"frame_vacation_date")
+        self.frame_vacation_date.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_vacation_date.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout_19 = QVBoxLayout(self.frame_vacation_date)
+        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
+        self.verticalLayout_19.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.label_5 = QLabel(self.frame_vacation_date)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setStyleSheet(u"color: black;")
+
+        self.horizontalLayout_6.addWidget(self.label_5)
+
+        self.combobox_filtration_by_period_for_vacation = QComboBox(self.frame_vacation_date)
+        self.combobox_filtration_by_period_for_vacation.addItem("")
+        self.combobox_filtration_by_period_for_vacation.addItem("")
+        self.combobox_filtration_by_period_for_vacation.addItem("")
+        self.combobox_filtration_by_period_for_vacation.addItem("")
+        self.combobox_filtration_by_period_for_vacation.setObjectName(u"combobox_filtration_by_period_for_vacation")
+        self.combobox_filtration_by_period_for_vacation.setStyleSheet(u"color: black;")
+
+        self.horizontalLayout_6.addWidget(self.combobox_filtration_by_period_for_vacation)
+
+
+        self.verticalLayout_19.addLayout(self.horizontalLayout_6)
+
+        self.tableWidget_3 = QTableWidget(self.frame_vacation_date)
+        if (self.tableWidget_3.columnCount() < 2):
+            self.tableWidget_3.setColumnCount(2)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.tableWidget_3.setHorizontalHeaderItem(0, __qtablewidgetitem4)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.tableWidget_3.setHorizontalHeaderItem(1, __qtablewidgetitem5)
+        self.tableWidget_3.setObjectName(u"tableWidget_3")
+        self.tableWidget_3.setStyleSheet(u"color: black;")
+        self.tableWidget_3.setSortingEnabled(True)
+
+        self.verticalLayout_19.addWidget(self.tableWidget_3)
+
+
+        self.verticalLayout_20.addWidget(self.frame_vacation_date)
+
+        self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_3)
+
+        self.horizontalLayout_3.addWidget(self.scrollArea_2)
+
 
         self.horizontalLayout.addWidget(self.frame_2)
 
@@ -421,6 +582,40 @@ class Ui_Dialog(object):
         self.label_10.setText(QCoreApplication.translate("Dialog", u"\u041e\u0442\u0434\u0435\u043b:", None))
         self.label_12.setText(QCoreApplication.translate("Dialog", u"\u0414\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u0430\u044f \u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f:", None))
         self.btn_save.setText(QCoreApplication.translate("Dialog", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
+        self.combobox_filtration_by_table.setItemText(0, QCoreApplication.translate("Dialog", u"\u0412\u0441\u0435", None))
+        self.combobox_filtration_by_table.setItemText(1, QCoreApplication.translate("Dialog", u"\u041e\u0431\u0443\u0447\u0435\u043d\u0438\u0435", None))
+        self.combobox_filtration_by_table.setItemText(2, QCoreApplication.translate("Dialog", u"\u041e\u0442\u043f\u0443\u0441\u043a\u0438", None))
+        self.combobox_filtration_by_table.setItemText(3, QCoreApplication.translate("Dialog", u"\u041f\u0440\u043e\u043f\u0443\u0441\u043a\u0438", None))
+
+        self.label.setText(QCoreApplication.translate("Dialog", u"\u041e\u0431\u0443\u0447\u0435\u043d\u0438\u0435", None))
+        self.combobox_filtration_by_period_for_study.setItemText(0, QCoreApplication.translate("Dialog", u"\u0424\u0438\u043b\u044c\u0442\u0440\u0430\u0446\u0438\u044f", None))
+        self.combobox_filtration_by_period_for_study.setItemText(1, QCoreApplication.translate("Dialog", u"\u041f\u0440\u043e\u0448\u0435\u0434\u0448\u0438\u0435", None))
+        self.combobox_filtration_by_period_for_study.setItemText(2, QCoreApplication.translate("Dialog", u"\u0422\u0435\u043a\u0443\u0449\u0438\u0435", None))
+        self.combobox_filtration_by_period_for_study.setItemText(3, QCoreApplication.translate("Dialog", u"\u0411\u0443\u0434\u0443\u0449\u0438\u0435", None))
+
+        ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
+        ___qtablewidgetitem.setText(QCoreApplication.translate("Dialog", u"\u041d\u0430\u0447\u0430\u043b\u043e", None));
+        ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("Dialog", u"\u041a\u043e\u043d\u0435\u0446", None));
+        self.label_4.setText(QCoreApplication.translate("Dialog", u"\u041f\u0440\u043e\u043f\u0443\u0441\u043a\u0438", None))
+        self.combobox_filtration_by_period_for_skips.setItemText(0, QCoreApplication.translate("Dialog", u"\u0424\u0438\u043b\u044c\u0442\u0440\u0430\u0446\u0438\u044f", None))
+        self.combobox_filtration_by_period_for_skips.setItemText(1, QCoreApplication.translate("Dialog", u"\u041f\u0440\u043e\u0448\u0435\u0434\u0448\u0438\u0435", None))
+        self.combobox_filtration_by_period_for_skips.setItemText(2, QCoreApplication.translate("Dialog", u"\u0422\u0435\u043a\u0443\u0449\u0438\u0435", None))
+
+        ___qtablewidgetitem2 = self.tableWidget_2.horizontalHeaderItem(0)
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("Dialog", u"\u041d\u0430\u0447\u0430\u043b\u043e", None));
+        ___qtablewidgetitem3 = self.tableWidget_2.horizontalHeaderItem(1)
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Dialog", u"\u041a\u043e\u043d\u0435\u0446", None));
+        self.label_5.setText(QCoreApplication.translate("Dialog", u"\u041e\u0442\u043f\u0443\u0441\u043a\u0438", None))
+        self.combobox_filtration_by_period_for_vacation.setItemText(0, QCoreApplication.translate("Dialog", u"\u0424\u0438\u043b\u044c\u0442\u0440\u0430\u0446\u0438\u044f", None))
+        self.combobox_filtration_by_period_for_vacation.setItemText(1, QCoreApplication.translate("Dialog", u"\u041f\u0440\u043e\u0448\u0435\u0434\u0448\u0438\u0435", None))
+        self.combobox_filtration_by_period_for_vacation.setItemText(2, QCoreApplication.translate("Dialog", u"\u0422\u0435\u043a\u0443\u0449\u0438\u0435", None))
+        self.combobox_filtration_by_period_for_vacation.setItemText(3, QCoreApplication.translate("Dialog", u"\u0411\u0443\u0434\u0443\u0449\u0438\u0435", None))
+
+        ___qtablewidgetitem4 = self.tableWidget_3.horizontalHeaderItem(0)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("Dialog", u"\u041d\u0430\u0447\u0430\u043b\u043e", None));
+        ___qtablewidgetitem5 = self.tableWidget_3.horizontalHeaderItem(1)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("Dialog", u"\u041a\u043e\u043d\u0435\u0446", None));
         self.pushButton.setText(QCoreApplication.translate("Dialog", u"\u0423\u0432\u043e\u043b\u0438\u0442\u044c", None))
     # retranslateUi
 

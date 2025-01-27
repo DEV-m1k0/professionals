@@ -1,6 +1,39 @@
 import requests
 
 
+def dismiss_employee_by_name(name: str):
+    url = f"http://127.0.0.1:8000/api/V1/employee/dismiss?employee={name}"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        return True
+    elif response.status_code == 400:
+        return False
+    return None
+
+def get_vacations_by_employee_name(name: str):
+    url = f"http://127.0.0.1:8000/api/V1/vacations/date?employee={name}"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        return response.json()
+    return None
+
+def get_skip_dates_by_employee_name(name: str):
+    url = f"http://127.0.0.1:8000/api/V1/skips/date?employee={name}"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        return response.json()
+    return None
+
+def get_study_date_by_employee_name(name: str):
+    url = f"http://127.0.0.1:8000/api/V1/events/date?responsible={name}"
+    response = requests.get(url)
+    
+    return response.json()
+
+
 def get_organizations():
     try:
         url = "http://127.0.0.1:8000/api/V1/organizations"

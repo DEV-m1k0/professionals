@@ -42,6 +42,7 @@ class SkipDateByEmployeeListAPIView(ListAPIView):
 
     def get(self, request, *args, **kwargs):
         if request.GET.get("employee") is not None:
+            print(request.GET)
             employee_name: str = request.GET.get("employee")
             try:
                 employer = Employee.objects.get(username=employee_name)
@@ -223,7 +224,10 @@ class EmployeeSearchByDepartmentApiView(ListAPIView):
             pass
         try:
             sub_sub_division = SubSubDivision.objects.get(title=department)
-            serializer = EmployeesSerializer(Employee.objects.filter(sub_sub_division=sub_sub_division, is_active=True), many=True)
+            print(sub_sub_division)
+            employees = Employee.objects.filter(sub_sub_division=sub_sub_division, is_active=True)
+            print(employees)
+            serializer = EmployeesSerializer(employees, many=True)
             return Response(serializer.data)
         except:
             pass

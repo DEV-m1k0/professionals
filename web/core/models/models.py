@@ -1,5 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
 
 # Create your models here.
 
@@ -41,19 +44,27 @@ class Cabinet(models.Model):
 
 
 class CalendarSkip(models.Model):
-    employees = models.ManyToManyField("Employee", related_name="calendar_skip_employees")
+    employee = models.ForeignKey("Employee", null=True, on_delete=models.SET_NULL)
     date_since = models.DateField()
-    date_until = models.DateField(null=True)
+    date_until = models.DateField(null=True, blank=True)
 
 
 class CalendarVacation(models.Model):
-    employees = models.ManyToManyField("Employee", related_name="calendar_vacation_employees")
+    employee = models.ForeignKey("Employee", null=True, on_delete=models.SET_NULL)
     date_since = models.DateField()
-    date_until = models.DateField(null=True)
+    date_until = models.DateField(null=True, blank=True)
+    
 
-
-class CalendarEducation(models.Model):
-    event_id = models.ForeignKey("Event", on_delete=models.CASCADE, related_name="event")
+class Event(models.Model):
+    title = models.CharField(max_length=255)
+    date_since = models.DateTimeField()
+    date_until = models.DateTimeField()
+    description = models.TextField(max_length=255)
+    status = models.BooleanField()
+    responsible_worker = models.ForeignKey("Employee", related_name="responsible_workers", null=True, blank=True, on_delete=models.SET_NULL)
+    event_type_id = models.ForeignKey("EventType", on_delete=models.CASCADE, related_name="event_type")
+    education_id = models.ForeignKey("Education", on_delete=models.CASCADE, related_name="education")
+    people = models.ManyToManyField("Employee", blank=True)
 
 class EducationType(models.Model):
     title = models.CharField(max_length=255)
@@ -91,18 +102,8 @@ class EventType(models.Model):
     title = models.CharField(max_length=255)
 
 
-class Event(models.Model):
-    title = models.CharField(max_length=255)
-    date_since = models.DateTimeField()
-    date_until = models.DateTimeField()
-    description = models.TextField(max_length=255)
-    status = models.BooleanField()
-    responsible_workers = models.ManyToManyField("Employee", related_name="responsible_workers")
-    event_type_id = models.ForeignKey("EventType", on_delete=models.CASCADE, related_name="event_type")
-    education_id = models.ForeignKey("Education", on_delete=models.CASCADE, related_name="education")
-
-
 class Employee(AbstractUser):
+    username = models.CharField(max_length=255, unique=True)
     position_id = models.ForeignKey("Position", on_delete=models.SET_NULL, null=True, related_name="position")
     work_phone = models.CharField(max_length=20, null=True)
     cabinet_id = models.ForeignKey("Cabinet", on_delete=models.SET_NULL, null=True, related_name="cabinet")
@@ -114,6 +115,7 @@ class Employee(AbstractUser):
     more_info = models.TextField(max_length=255, null=True)
     birthday = models.DateField(null=True)
     personal_phone = models.CharField(max_length=20, null=True)
+    date_of_dismissal = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return str(self.username)
@@ -132,6 +134,40 @@ class DocumentComment(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class News(models.Model):
+    title = models.CharField(max_length=255, blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
+    description = models.TextField(max_length=255, blank=True, null=True)
+    photo = models.ImageField(upload_to="media", blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        if self.photo:
+            # Открываем изображение
+            image = Image.open(self.photo)
+
+            if image.mode == "RGBA":
+                background = Image.new("RGB", image.size, (255, 255, 255))
+                background.paste(image, mask=image.split()[3])
+                image = background
+            
+            # Устанавливаем нужный размер
+            new_size = (300, 200)  # Измените размеры на нужные вам
+            image.thumbnail(new_size, Image.Resampling.LANCZOS)
+
+            # Создаем файловый объект для сохранения измененного изображения
+            temp_file = BytesIO()
+            image.save(temp_file, format='JPEG')
+            temp_file.seek(0)
+
+            # Сохраняем измененное изображение обратно в поле фото
+            self.photo.save(self.photo.name, ContentFile(temp_file.read()), save=False)
+
+        super().save(*args, **kwargs)
 
 
 class Document(models.Model):

@@ -15,88 +15,8 @@ from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QListWidget,
     QMessageBox, QTreeWidgetItem, QFrame, QDialog)
 from main_window import Ui_MainWindow
 from api import *
-from add_employee_dialog import Ui_Dialog
+from dialogs import EditEmployeeDialog, AddEmployeeDialog
 
-
-class DialogWindow(QDialog):
-    def __init__(self, employees, cabinets, job_titles,
-                 organizations, sub_divisions, sub_sub_divisions):
-        super().__init__()
-
-        self.employees = employees
-        self.cabinets = cabinets
-        self.boss = employees
-        self.helpers = employees
-        self.job_titles = job_titles
-        self.organizations = organizations
-        self.sub_divisions = sub_divisions
-        self.sub_sub_divisions = sub_sub_divisions
-
-        self.ui = Ui_Dialog()
-        self.ui.setupUi(self)
-        self.setModal(True)
-        self.setup_optional_fields()
-
-        self.ui.btn_save.clicked.connect(self.save)
-
-    def save(self):
-        full_name = self.ui.input_full_name.text()
-        date_of_birth = self.ui.input_date_of_birth.text()
-        more_info = self.ui.input_more_info.toPlainText()
-        home_number = self.ui.input_home_number.text()
-        work_number = self.ui.input_work_phone.text()
-        work_email = self.ui.input_work_email.text()
-
-        helper = self.ui.optional_helpers.currentText()
-        helper_id = get_employee_by_name(helper)
-        boss = self.ui.optional_boss.currentText()
-        boss_id = get_employee_by_name(boss)
-        job_title = self.ui.optional_job_titles.currentText()
-        job_title_id = get_job_title_by_name(job_title)
-        cabinet = self.ui.optional_cabinets.currentText()
-        cabinet_id = get_cabinet_by_name(cabinet)
-        organization = self.ui.optional_organizations.currentText()
-        organization_id = get_organization_by_name(organization)
-        sub_division = self.ui.optional_sub_divisions.currentText()
-        sub_division_id = get_sub_division_by_name(sub_division)
-        sub_sub_division = self.ui.optional_department.currentText()
-        sub_sub_division_id = get_sub_sub_division_by_name(sub_sub_division)
-
-        day, month, year = date_of_birth.split('.')
-        password = bcrypt.hashpw(full_name.encode(), bcrypt.gensalt()).decode()
-        birthday = date(int(year), int(month), int(day))
-
-        url = "http://127.0.0.1:8000/api/V1/employees"
-        response = requests.post(url=url, json={
-            "username": full_name,
-            "password": password,
-            "email": work_email,
-            "work_phone": work_number,
-            "more_info": more_info,
-            "birthday": str(birthday),
-            "personal_phone": home_number,
-            "position_id": job_title_id,
-            "cabinet_id": cabinet_id,
-            "boss_id": boss_id,
-            "helper_id": helper_id,
-            "organization": organization_id,
-            "subdivision": sub_division_id,
-            "sub_sub_division": sub_sub_division_id
-        })
-
-        print(response.content)
-
-
-    def setup_optional_fields(self):
-        self.ui.optional_boss.addItems(self.employees)
-        self.ui.optional_cabinets.addItems(self.cabinets)
-        self.ui.optional_boss.addItems(self.employees)
-        self.ui.optional_job_titles.addItems(self.job_titles)
-        self.ui.optional_helpers.addItems(self.employees)
-        self.ui.optional_organizations.addItems(self.organizations)
-        self.ui.optional_sub_divisions.addItems(self.sub_divisions)
-        self.ui.optional_department.addItems(self.sub_sub_divisions)
-        
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -115,18 +35,35 @@ class MainWindow(QMainWindow):
 
         self.ui.treeWidget_departments.itemClicked.connect(self.item_selected)
         self.ui.employee_add_button.clicked.connect(self.add_employee)
+        self.ui.listWidget.itemClicked.connect(self.employee_selected)
+
+        self.selected_department = ""
+
+
+    def employee_selected(self, item: QListWidgetItem):
+        dialog = EditEmployeeDialog(name=item.text(), cabinets=self.cabinets, job_titles=self.job_titles,
+                                    organizations=self.organizations, sub_divisions=self.sub_divisions,
+                                    sub_sub_divisions=self.sub_sub_divisions, employees=self.employees,
+                                    selected_department=self.selected_department)
+        dialog.exec()
 
 
     def add_employee(self):
-        dialog = DialogWindow(self.employees, self.cabinets,
+        dialog = AddEmployeeDialog(self.employees, self.cabinets,
                               self.job_titles, self.organizations,
                               self.sub_divisions, self.sub_sub_divisions)
         dialog.exec()
 
 
-    def item_selected(self, item: QTreeWidgetItem, column: int):
+    def item_selected(self, item: QTreeWidgetItem, column: int = 0):
+        try:
+            text = item.text(column).strip()
+        except:
+            text = item.strip()
+        self.selected_department = text
         self.ui.listWidget.clear()
-        users = get_employees_by_department(item.text(column))
+        print(text)
+        users = get_employees_by_department(text)
 
         for user in users:
             self.ui.listWidget.addItem(user['username'])

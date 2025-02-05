@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #e0f4c8;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.-emoji-cell- {
+    --adp-cell-background-color-selected: #ffb8ff;
+    --adp-cell-background-color-selected-hover: #fda5fd;
+}

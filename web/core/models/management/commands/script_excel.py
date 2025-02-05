@@ -13,11 +13,11 @@ class Command(BaseCommand):
         df.index.get_loc(df[df['Unnamed: 1'] == 'Матвеев Вадим Юрьевич'].index[0])
         for row in df.values:
             ad = []
+            org = ''
+            suborg =''
+            subsuborg =''
+            sub_sub_division = ''
             if row[1] is not nan:
-                org = ''
-                suborg =''
-                subsuborg =''
-                sub_sub_division = ''
                 try:
                     pos = Position.objects.get(title=row[0])
                 except:
@@ -35,7 +35,7 @@ class Command(BaseCommand):
                             break
                 org = ad[-1]
                 if len(str(ad[0]).split('. ')[0].split('.')) == 3:
-                    suborg = ad[1]
+                    suborg = ad[int(str(ad[0]).split('. ')[0].split('.')[-1])]
                     subsuborg = ad[0]
                 else:
                     suborg = ad[0]
@@ -47,6 +47,9 @@ class Command(BaseCommand):
                         sub_sub_division.save()
                 try:
                     sub_division = Subdivision.objects.get(title=suborg)
+                    if sub_sub_division != "":
+                        sub_division.sub_sub_division.add(sub_sub_division)
+                    
                 except:
                     sub_division = Subdivision(title=suborg)
                     sub_division.save()
@@ -54,14 +57,17 @@ class Command(BaseCommand):
                         sub_division.sub_sub_division.add(sub_sub_division)
                 try:
                     organization = Organization.objects.get(title=org)
+                    organization.subdivisions.add(sub_division)
+                    organization.save()
                 except:
                     organization = Organization(title=org)
                     organization.save()
                     organization.subdivisions.add(sub_division)
                     organization.save()
+               
+                full_name = str(row[1]).split(" ")
                 try:
-                    full_name = str(row[1]).split(" ")
-                    employee = Employee(first_name=full_name[1], last_name=full_name[0], patronymic=full_name[2],
+                    employee = Employee(first_name=full_name[1], last_name=full_name[0],
                                         birthday=row[2], work_phone=row[3], cabinet_id=cab, email=row[5], position_id=pos,
                                         username=row[1], password=make_password(full_name[0]))
                     employee.organization = organization
@@ -71,3 +77,4 @@ class Command(BaseCommand):
                     employee.save()
                 except:
                     pass
+                

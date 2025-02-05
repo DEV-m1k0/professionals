@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block links %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.css' %}">
+    <title>{{title}}</title>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <input type="search" class="form-control" placeholder="Поиск...">
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="employees">
+            <h2>Сотрудники</h2>
+            <div class="block-employees d-flex overflow-x-auto">
+                {% for employee in employees %}
+                    <div class="employee-card mx-2 text-white p-2 d-flex flex-column position-relative" style="background-color: rgb(62, 181, 62); min-width: 200px;">
+                        <h5>{{employee.username}}</h5>
+                        <span style="font-size: small;">{{employee.position_id}}</span>
+                        <span style="font-size: small;"><u>{{employee.email}}</u></span>
+                        <p style="font-size: small;">{{employee.work_phone}}</p>
+                        <div class="position-absolute bottom-0">
+                            <span class="" style="font-size: small;">{{employee.birthday}}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="row">
+                    <div class="">
+                        <h2>Календарь событий</h2>
+                        <input class="form-control-sm" type="date" name="" id="">
+                    </div>
+                </div>
+                <div class="row">
+                    <h2>События</h2>
+                    <div class="d-flex flex-column overflow-y-auto" style="height: 50vh;">
+                        {% for event in events %}
+                            <div class="px-3 pt-2 pb-5 mb-3 text-white position-relative" style="background-color: rgb(62, 181, 62);">
+                                <b>{{event.title}}</b><br>
+                                <span>{{event.description}}</span>
+                                <span class="position-absolute bottom-0 start-0 ms-3 mb-2"><small>{{event.date_since}}</small></span>
+                                <span class="position-absolute bottom-0 end-0 me-3 mb-2"><small>{{event.responsible_worker}}</small></span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <h2>Новости</h2>
+                        {% for feed in feed_news %}
+                            <div class="col-5">
+                                <div class="card-img-top">
+                                    <img class="card-img" src="{{feed.photo}}" alt="">
+                                </div>
+                                <div class="card-body text-white px-3 py-1" style="background-color: rgb(62, 181, 62);">
+                                    <h5 class="card-title">{{feed.title}}</h5>
+                                    <p class="card-text">{{feed.description}}</p>
+                                    <p class="card-text"><small>{{feed.date}}</small></p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+
+    {% block body %}{% endblock %}
+</body>
+    <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.js' %}"></script>
+
+    {% block scripts %}{% endblock %}
+</html>

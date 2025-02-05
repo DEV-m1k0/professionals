@@ -19,6 +19,11 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QDateEdit, QDialog,
     QFrame, QHBoxLayout, QLabel, QLineEdit,
     QPlainTextEdit, QPushButton, QSizePolicy, QTabWidget,
     QVBoxLayout, QWidget)
+from api import *
+import bcrypt
+from datetime import date
+
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):

@@ -16,8 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from news.views import HomePageView
+from news.feeds import NewsFeed
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/V1/", include("api.urls"))
-]
+    path("api/V1/", include("api.urls")),
+    # path('news/', include("news.urls")),
+    path("", HomePageView.as_view(), name="home"),
+    path("news/feed", NewsFeed(), name="news_feed")
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

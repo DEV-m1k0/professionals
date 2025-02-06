@@ -14,7 +14,12 @@
 
     <header>
         <div class="container">
-            <input type="search" class="form-control" placeholder="Поиск...">
+            <form class="d-flex" method="post">
+                {% csrf_token %}
+                <!-- <input type="search" class="form-control" id="search" placeholder="Поиск..."> -->
+                 {{search_form.search}}
+                <button class="ms-3 btn btn-primary" type="submit">Найти</button>
+            </form>
         </div>
     </header>
 
@@ -23,7 +28,7 @@
             <h2>Сотрудники</h2>
             <div class="block-employees d-flex overflow-x-auto">
                 {% for employee in employees %}
-                    <div class="employee-card mx-2 text-white p-2 d-flex flex-column position-relative" style="background-color: rgb(62, 181, 62); min-width: 200px;">
+                    <div id="block-employee" class="employee-card mx-2 text-white p-2 d-flex flex-column position-relative" style="background-color: rgb(62, 181, 62); min-width: 200px;">
                         <h5>{{employee.username}}</h5>
                         <span style="font-size: small;">{{employee.position_id}}</span>
                         <span style="font-size: small;"><u>{{employee.email}}</u></span>
@@ -46,7 +51,7 @@
                 </div>
                 <div class="row">
                     <h2>События</h2>
-                    <div class="d-flex flex-column overflow-y-auto" style="height: 50vh;">
+                    <div id="block-events" class="d-flex flex-column overflow-y-auto" style="height: 50vh;">
                         {% for event in events %}
                             <div class="px-3 pt-2 pb-5 mb-3 text-white position-relative" style="background-color: rgb(62, 181, 62);">
                                 <b>{{event.title}}</b><br>
@@ -59,27 +64,69 @@
                 </div>
             </div>
             <div class="col">
-                <div class="row">
-                    <h2>Новости</h2>
-                        {% for feed in feed_news %}
-                            <div class="col-5">
-                                <div class="card-img-top">
-                                    <img class="card-img" src="{{feed.photo}}" alt="">
-                                </div>
-                                <div class="card-body text-white px-3 py-1" style="background-color: rgb(62, 181, 62);">
-                                    <h5 class="card-title">{{feed.title}}</h5>
-                                    <p class="card-text">{{feed.description}}</p>
-                                    <p class="card-text"><small>{{feed.date}}</small></p>
-                                </div>
+                <h2>Новости</h2>
+                <div id="block-news" class="row">
+                    {% for feed in feed_news %}
+                        <div class="col-5">
+                            <div class="card-img-top">
+                                <img class="card-img" src="{{feed.photo}}" alt="">
                             </div>
-                        {% endfor %}
+                            <div class="card-body text-white px-3 py-1" style="background-color: rgb(62, 181, 62);">
+                                <h5 class="card-title">{{feed.title}}</h5>
+                                <p class="card-text">{{feed.description}}</p>
+                                <p class="card-text"><small>{{feed.date}}</small></p>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
 
     </div>
 
-    
+    <script>
+        const inpSearch = document.getElementById('search');
+        const blockEmployee = document.getElementById('block-employee');
+        const blockEvents = document.getElementById('block-events');
+        const blockNews = document.getElementById('block-news');
+
+        
+
+        function performSearch(query) {
+            if (!query || query.trim().length === 0) {
+                resultsDiv.innerText = '';
+                return;
+            }
+            
+            // Здесь выполняется сам поиск по содержимому страницы или API
+            // В данном примере мы просто ищем по заголовкам h1-h6
+            let matches = [];
+            let elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            elements.forEach(element => {
+                if (element.textContent.toLowerCase().includes(query.toLowerCase())) {
+                    matches.push(element);
+                }
+            });
+
+            // Обновляем результаты поиска
+            resultsDiv.innerHTML = ''; // Очищаем предыдущие результаты
+            if (matches.length > 0) {
+                matches.forEach(match => {
+                    let resultItem = document.createElement('p');
+                    resultItem.textContent = match.textContent;
+                    resultsDiv.appendChild(resultItem);
+                });
+            } else {
+                resultsDiv.textContent = 'Ничего не найдено.';
+            }
+        }
+
+
+        inpSearch.addEventListener('input', function(event) {
+            childs = blockEmployee.childNodes
+            alert(childs.innerText)
+        });
+    </script>
 
     {% block body %}{% endblock %}
 </body>

@@ -144,30 +144,7 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
-    
-    def save(self, *args, **kwargs):
-        if self.photo:
-            # Открываем изображение
-            image = Image.open(self.photo)
 
-            if image.mode == "RGBA":
-                background = Image.new("RGB", image.size, (255, 255, 255))
-                background.paste(image, mask=image.split()[3])
-                image = background
-            
-            # Устанавливаем нужный размер
-            new_size = (300, 200)  # Измените размеры на нужные вам
-            image.thumbnail(new_size, Image.Resampling.LANCZOS)
-
-            # Создаем файловый объект для сохранения измененного изображения
-            temp_file = BytesIO()
-            image.save(temp_file, format='JPEG')
-            temp_file.seek(0)
-
-            # Сохраняем измененное изображение обратно в поле фото
-            self.photo.save(self.photo.name, ContentFile(temp_file.read()), save=False)
-
-        super().save(*args, **kwargs)
 
 
 class Document(models.Model):
